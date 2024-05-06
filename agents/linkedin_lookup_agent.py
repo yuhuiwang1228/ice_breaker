@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import sys
 
-sys.path.append('E:\\LearnLangChain\\ice_breaker')
+sys.path.append(os.environ.get("PYTHONPATH"))
 
 load_dotenv()
 
