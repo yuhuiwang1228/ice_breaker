@@ -8,6 +8,7 @@ python-dotenv = "*"
 langchain = "*"
 langchain-openai = "*"
 tweepy = "*"
+flask = "*"
 
 [dev-packages]
 

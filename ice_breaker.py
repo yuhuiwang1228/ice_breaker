@@ -1,16 +1,18 @@
+from typing import Tuple
+
 from dotenv import load_dotenv
 from langchain.prompts.prompt import PromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain.chains import LLMChain
 
-from output_parsers import summary_parser
+from output_parsers import summary_parser,Summary
 from third_parties.linkedin import scrape_linkedin_profile
 from agents.linkedin_lookup_agent import lookup as linkedin_lookup_agent
 from agents.twitter_lookup_agent import lookup as twitter_lookup_agent
 from third_parties.twitter import scrape_user_tweets
 
 
-def ice_break_with(name: str) -> str:
+def ice_break_with(name: str) -> Tuple[Summary, str]:
     linkedin_username = linkedin_lookup_agent(name=name)
     linkedin_data = scrape_linkedin_profile(
         linkedin_profile_url=linkedin_username, mock=True
@@ -40,9 +42,9 @@ def ice_break_with(name: str) -> str:
 
     chain = summary_prompt_template | llm | summary_parser
 
-    res = chain.invoke(input={"information": linkedin_data, "twitter_posts": tweets})
+    res: Summary = chain.invoke(input={"information": linkedin_data, "twitter_posts": tweets})
 
-    print(res)
+    return res, linkedin_data.get("profile_pic_url")
 
 
 if __name__ == "__main__":
