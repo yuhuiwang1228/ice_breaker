@@ -8,6 +8,8 @@ python-dotenv = "*"
 langchain = "*"
 langchain-openai = "*"
 tweepy = "*"
+langchainhub = "*"
+langchain-experimental = "*"
 
 [dev-packages]
 
